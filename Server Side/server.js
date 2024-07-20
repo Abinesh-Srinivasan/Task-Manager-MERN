@@ -25,12 +25,12 @@ const taskModel = new mongoose.model("Task", taskSchema);
 // Middleware to Parse JSON Data
 app.use(express.json());
 
-// Creating the task in the Db
+// Create the task in the Db
 app.post("/task", async (req, res) => {
   try {
     const { title, description } = req.body;
-    const newTask = await taskModel({ title, description });
-    newTask.save();
+    const newTask = new taskModel({ title, description });
+    await newTask.save();
     res.status(201).json(newTask);
   } catch (error) {
     console.log(error);
@@ -38,11 +38,44 @@ app.post("/task", async (req, res) => {
   }
 });
 
-// Obtaining all the tasks from the Db
+// Obtain all the tasks from the Db
 app.get("/task", async (req, res) => {
   try {
     const allTasks = await taskModel.find();
     res.status(200).send(allTasks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: `${error.message}` });
+  }
+});
+
+// Update the task in the Db
+app.put("/task/:id", async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const { id } = req.params;
+    const updatedTask = await taskModel.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+      },
+      { new: true }
+    );
+    if (!updatedTask) res.status(404).send("Given Task not found");
+    res.status(200).json(updatedTask);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: `${error.message}` });
+  }
+});
+
+// Delete the task in the Db
+app.delete("/task/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await taskModel.findByIdAndDelete(id);
+    res.status(204).end();
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: `${error.message}` });
