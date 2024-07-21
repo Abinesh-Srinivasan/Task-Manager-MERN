@@ -2,11 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors=require("cors")
 const app = express();
+require('dotenv').config();
 
 // Database Connection
-const connectionString = "mongodb://localhost:27017/";
+// const connectionString = "mongodb://localhost:27017/";
+const mongodbUri = process.env.MONGO_URI;
 async function mongoDbConnect() {
-  await mongoose.connect(connectionString);
+  await mongoose.connect(mongodbUri);
   console.log("Database connected");
 }
 mongoDbConnect().catch((err) => console.log(`Db Connection error:${err}`));
