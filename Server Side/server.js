@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors=require("cors")
 const app = express();
 
 // Database Connection
@@ -24,6 +25,8 @@ const taskModel = new mongoose.model("Task", taskSchema);
 
 // Middleware to Parse JSON Data
 app.use(express.json());
+// Middleware to solve CORS Policy error
+app.use(cors())
 
 // Create the task in the Db
 app.post("/task", async (req, res) => {
