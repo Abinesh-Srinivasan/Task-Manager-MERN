@@ -5,7 +5,7 @@ const App = () => {
   const [description, setDescription] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  const apiURL = "http://192.168.230.242:5000";
+  const apiURL = "http://192.168.144.242:5000";
 
   // Get the tasks from the Backend
   useEffect(() => {

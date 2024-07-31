@@ -6,7 +6,7 @@ require('dotenv').config();
 
 // Database Connection
 // const connectionString = "mongodb://localhost:27017/";
-const mongodbUri = process.env.MONGO_URI;
+const mongodbUri = process.env.MONGO_URI||connectionString;
 async function mongoDbConnect() {
   await mongoose.connect(mongodbUri);
   console.log("Database connected");
