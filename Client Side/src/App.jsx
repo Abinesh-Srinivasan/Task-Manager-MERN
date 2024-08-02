@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 
 const App = () => {
-  if (process.env.NODE_ENV === "production") {
-    alert("There may be some delay occurs when adding and retrieving the tasks due to API calls...")
-  }
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tasks, setTasks] = useState([]);
@@ -24,6 +22,14 @@ const App = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      alert(
+        "There may be some delay occurs when adding and retrieving the tasks due to API calls..."
+      );
+    }
+  },[])
 
   // Send the task to the Backend
   const handleSubmit = async () => {
