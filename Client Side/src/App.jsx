@@ -5,8 +5,7 @@ const App = () => {
   const [description, setDescription] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  const apiURL =
-    "https://api.render.com/deploy/srv-cql43krqf0us73btvvcg?key=Ahst_QBFWjI";
+  const apiURL = import.meta.env.VITE_RenderApiUrl;
 
   // Get the tasks from the Backend
   useEffect(() => {
